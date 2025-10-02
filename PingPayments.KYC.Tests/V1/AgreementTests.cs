@@ -27,7 +27,7 @@ namespace PingPayments.KYC.Tests.V1
             var createAgreementRequest = new CreateRequestBody
             {
                 TemplateId = templateId,
-                EventCallbackUrl = new Uri("http://www.hokuS-pokuS-boguS.com/event"),
+                EventCallbackUrl = new Uri("http://www.example.com/event"),
                 MerchantId = TestData.MerchantId,
                 Name = "Test",
                 Provider = AgreementTypeEnum.oneflow,
@@ -55,7 +55,7 @@ namespace PingPayments.KYC.Tests.V1
 
                     }
                 },
-                ProviderStateCallbackUrl = new Uri("http://www.hokuS-pokuS-boguS.com")
+                ProviderStateCallbackUrl = new Uri("http://www.example.com")
             };
             var createAgreementResponse = await _api.Agreement.V1.Create(createAgreementRequest);
             AssertHttpOK(createAgreementResponse);
@@ -92,8 +92,8 @@ namespace PingPayments.KYC.Tests.V1
                 AgreementId = agreementId,
                 ProviderParameters = new PublishAgreementParameters
                 {
-                    Subject = "Signa detta mannen!",
-                    Message = "Inte alls en scam!"
+                    Subject = "Example agreement",
+                    Message = "Please sign this document to complete the process"
                 }
             };
             var publishAgreementResponse = await _api.Agreement.V1.Publish(publishPayload);
