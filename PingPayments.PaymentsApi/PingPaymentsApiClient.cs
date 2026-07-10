@@ -17,6 +17,9 @@ using PingPayments.PaymentsApi.Merchants;
 using PingPayments.PaymentsApi.Merchants.Create.V1;
 using PingPayments.PaymentsApi.Merchants.Get.V1;
 using PingPayments.PaymentsApi.Merchants.List.V1;
+using PingPayments.PaymentsApi.PaymentConsents;
+using PingPayments.PaymentsApi.PaymentConsents.Create.V1;
+using PingPayments.PaymentsApi.PaymentConsents.Get.V1;
 using PingPayments.PaymentsApi.PaymentOrders;
 using PingPayments.PaymentsApi.PaymentOrders.Allocations.V1;
 using PingPayments.PaymentsApi.PaymentOrders.Close.V1;
@@ -102,6 +105,13 @@ namespace PingPayments.PaymentsApi
             );
             _payments = new Lazy<IPaymentResource>(() => new PaymentResource(paymentsV1));
 
+            var paymentConsentV1 = new PaymentConsentV1
+            (
+                new Lazy<CreatePaymentConsentOperation>(() => new CreatePaymentConsentOperation(httpClient)),
+                new Lazy<GetPaymentConsentOperation>(() => new GetPaymentConsentOperation(httpClient))
+            );
+            _paymentConsentResource = new Lazy<IPaymentConsentResource>(() => new PaymentConsentResource(paymentConsentV1));
+
             var paymentOrderV1 = new PaymentOrderV1
             (
                  new Lazy<GetPaymentOrderOperation>(() => new GetPaymentOrderOperation(httpClient)),
@@ -181,6 +191,10 @@ namespace PingPayments.PaymentsApi
 
         private readonly Lazy<IPaymentResource> _payments;
         public IPaymentResource Payments => _payments.Value;
+
+
+        private readonly Lazy<IPaymentConsentResource> _paymentConsentResource;
+        public IPaymentConsentResource PaymentConsent => _paymentConsentResource.Value;
 
 
         private readonly Lazy<IPaymentOrderResource> _paymentOrderResource;

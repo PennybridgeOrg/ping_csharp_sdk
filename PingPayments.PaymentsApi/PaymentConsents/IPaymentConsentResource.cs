@@ -1,4 +1,4 @@
-namespace PingPayments.Mimic.PaymentConsent
+namespace PingPayments.PaymentsApi.PaymentConsents
 {
     public interface IPaymentConsentResource
     {
