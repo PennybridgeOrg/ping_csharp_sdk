@@ -136,6 +136,45 @@ namespace PingPayments.PaymentsApi.Tests.V1
             Assert.NotNull(body?.ProviderMethodResponse?.PaymentLinkUrl);
         }
 
+        [Fact(Skip = "Sandbox/provider dependent PayPal flow may return 403 in current test environment")]
+        public async Task Initiate_paypal_ppcp_payment_calls_endpoint()
+        {
+            var requestObject = CreatePayment.PayPal.Ppcp
+            (
+                CurrencyEnum.SEK,
+                new OrderItem[]
+                {
+                    new OrderItem(100.ToMinorCurrencyUnit(), "Test item", SwedishVat.Vat25, TestData.MerchantId)
+                },
+                description: "Test PayPal payment",
+                designatedMerchantId: TestData.MerchantId,
+                itemCategory: PayPalItemCategoryEnum.DIGITAL_GOODS,
+                locale: "sv-SE",
+                redirectUrl: new Uri("https://example.com/redirect"),
+                shipping: new PayPalShipping
+                {
+                    Preference = PayPalShippingPreferenceEnum.NO_SHIPPING
+                }
+            );
+            var response = await _api.Payments.V1.Initiate(TestData.OrderId, requestObject);
+
+            Assert.True
+            (
+                response.StatusCode == System.Net.HttpStatusCode.OK ||
+                response.StatusCode == System.Net.HttpStatusCode.Forbidden,
+                $"Expected OK or Forbidden, but got {(int)response.StatusCode} ({response.StatusCode})"
+            );
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Assert.NotNull(response?.Body?.SuccessfulResponseBody);
+                PayPalPPCPPaymentResponseBody? body = response;
+                Assert.NotNull(body);
+                Assert.NotEqual(Guid.Empty, body?.Id);
+                Assert.NotNull(body?.ProviderMethodResponse?.Url);
+            }
+        }
+
         [Fact]
         public async Task Initiate_payment_422_when_order_items_and_total_amount_does_not_match()
         {

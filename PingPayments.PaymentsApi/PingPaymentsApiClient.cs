@@ -14,6 +14,7 @@ using PingPayments.PaymentsApi.LiquidityAccounts;
 using PingPayments.PaymentsApi.LiquidityAccounts.Create.V1;
 using PingPayments.PaymentsApi.LiquidityAccounts.Get.V1;
 using PingPayments.PaymentsApi.Merchants;
+using PingPayments.PaymentsApi.Merchants.ActivatePaymentMethod.V1;
 using PingPayments.PaymentsApi.Merchants.Create.V1;
 using PingPayments.PaymentsApi.Merchants.Get.V1;
 using PingPayments.PaymentsApi.Merchants.List.V1;
@@ -131,7 +132,9 @@ namespace PingPayments.PaymentsApi
                 new Lazy<CreateMerchantOperation>(() => new CreateMerchantOperation(httpClient)),
                 new Lazy<GetMerchantOperation>(() => new GetMerchantOperation(httpClient)),
                 new Lazy<ListMerchantsDataOperation>(() => new ListMerchantsDataOperation(httpClient)),
-                new Lazy<ListMerchantsPageOperation>(() => new ListMerchantsPageOperation(httpClient))
+                new Lazy<ListMerchantsPageOperation>(() => new ListMerchantsPageOperation(httpClient)),
+                new Lazy<ActivatePayPalPPCPOperation>(() => new ActivatePayPalPPCPOperation(httpClient)),
+                new Lazy<GetMerchantPaymentProviderMethodActivationOperation>(() => new GetMerchantPaymentProviderMethodActivationOperation(httpClient))
             );
             _merchants = new Lazy<IMerchantResource>(() => new MerchantResource(merchantV1));
 
