@@ -1,6 +1,6 @@
 # Change Log
 
-## 4.0.13 (2026-08-11)
+## 4.0.13 (2026-08-20)
 - Created methods and models for Recurring payments at Bankgirot and Swish.
 - Add support for PayPal Commerce Platform (PPCP)
 - Implement the Initiate Payment Batch endpoint
