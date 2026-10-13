@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace PingPayments.PaymentsApi.Merchants.Shared.V1
 {
@@ -21,19 +22,35 @@ namespace PingPayments.PaymentsApi.Merchants.Shared.V1
         /// Swedish personal identity number. 
         /// The personal identity number is composed of your date of birth followed by a 4-digit number with the following pattern: ^\d{12}$
         /// </summary>
+        [Obsolete("Deprecated in the API. Use Identifier instead.")]
         [JsonPropertyName("se_personal_identity_number")]
         public string? SePersonalIdentityNumber { get; set; } = null;
 
         /// <summary>
         /// Danish Civil Registration Number (CPR) associated with the entity.
         /// </summary>
+        [Obsolete("Deprecated in the API. Use Identifier instead.")]
         [JsonPropertyName("dk_civil_registration_number")]
         public string? DkCivilRegistrationNumber { get; set; } = null;
 
         /// <summary>
         /// Norwegian national identity number.
         /// </summary>
+        [Obsolete("Deprecated in the API. Use Identifier instead.")]
         [JsonPropertyName("no_identity_number")]
         public string? NoIdentityNumber { get; set; } = null;
+
+        /// <summary>
+        /// Finnish personal identity code.
+        /// </summary>
+        [Obsolete("Deprecated in the API. Use Identifier instead.")]
+        [JsonPropertyName("fi_personal_identity_code")]
+        public string? FiPersonalIdentityCode { get; set; } = null;
+
+        /// <summary>
+        /// Unique country identifier. For Nordic countries use the local personal identification number.
+        /// </summary>
+        [JsonPropertyName("identifier")]
+        public string? Identifier { get; set; } = null;
     }
 }
